@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+
+<title> Show RSS Feed </title>
+
+<script src="rss.js"></script>
+</head>
+
+<body>
+<form>
+	<select id="options" onchange="showFeed();">
+	<option value="default">Choose Deals Category</option>
+	<option value="http://dev-mystique.tavisca.com/api/deals/all?token=oueq112tiudcc30vxgjcmbia&$filter=Type eq 'hotel'">Hotels</option>
+	<option value="http://dev-mystique.tavisca.com/api/deals/all?token=oueq112tiudcc30vxgjcmbia&$filter=Type eq 'car'">Cars</option>
+	<!-- <option value="http://dev-mystique.tavisca.com/api/deals/all?token=oueq112tiudcc30vxgjcmbia&$filter=Type eq 'activity'">Activities</option> -->
+	</select><br>
+
+	<!-- <textarea id="blogContent" rows="10" cols="100"></textarea> -->
+</form>
+	
+	<div id = "container">
+	</div>
+
+
+
+
+</body>
+
+
+</html>
