@@ -1,10 +1,13 @@
-var showFeed = function(){
 var e = document.getElementById("options");
+
+
+var showFeed = function(){
+	
 var url = e.options[e.selectedIndex].value;
 var dropdownind = e.selectedIndex;
 var xmlhttp;
 xmlhttp=new XMLHttpRequest();
-var parent = document.getElementById("container");
+var parent = document.getElementById("containerdiv");
 while(parent.firstChild){
 parent.removeChild(parent.firstChild);
 }
@@ -14,7 +17,6 @@ xmlhttp.onreadystatechange=function()
 
 	if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	{
-		//document.getElementById("blogContent").innerHTML=xmlhttp.responseText;
 		var result =JSON.parse(xmlhttp.responseText);
 		var len =result.deals.length;
 		switch(dropdownind)
@@ -23,81 +25,88 @@ xmlhttp.onreadystatechange=function()
 			for (var i =0; i<len;i++)
 			{
 					var res = result.deals[i];
-					var hoteldiv = document.createElement("DIV");
+					var hoteldiv = document.createElement("div");
+					hoteldiv.className += "row dealcontainer";
 					hoteldiv.id = "hoteldivno"+i;
-					hoteldiv.style.border = "1px solid";
-					hoteldiv.style.background ="#E6E6E6";
+				
 					var hoteldesdiv = document.createElement("DIV");
-					hoteldesdiv.style.float = "left";
-					hoteldesdiv.style.width = "50%";
-					
+					hoteldesdiv.className += "col description";
 					hoteldiv.appendChild(hoteldesdiv);
 				
-					var hotelnametext = document.createElement("H1");
-					hotelnametext.innerHTML=res.hotelName;
-					hoteldesdiv.appendChild(hotelnametext);
+					var hotelname = document.createElement("H2");
+					var hotelNameText = document.createTextNode(res.hotelName); 
+				
+					hotelname.appendChild(hotelNameText);
+					hoteldesdiv.appendChild(hotelname);
 
 					var hoteldescription = document.createTextNode(res.description);
 					hoteldesdiv.appendChild(hoteldescription);
 
 					var hotelimgdiv = document.createElement("DIV");
-					//hotelimgdiv.style.width = "50%";
+					hotelimgdiv.className = "col";
 					hoteldiv.appendChild(hotelimgdiv);
 					var hotelimg = document.createElement("IMG");
+					hotelimg.className = "customthumbnail";
 					hotelimg.src = res.imageUrl;
-					hotelimg.style.width= "300px";
-					hotelimg.style.height = "200px";
-					hotelimg.style.padding = "10px";
-					hotelimg.style.border = "2 px grey";
-				
 					hotelimgdiv.appendChild(hotelimg);
-					document.getElementById("container").appendChild(hoteldiv);
+					document.getElementById("containerdiv").appendChild(hoteldiv);
 			 }
 			break;
 			case 2 :
 					for (var i =0; i<len;i++)
 					{
 						var res = result.deals[i];
-						var carDealsdiv = document.createElement("DIV");
+						var carDealsdiv = document.createElement("div");
+						carDealsdiv.className ="row dealcontainer";
 						carDealsdiv.id = "cardealno"+i;
-						carDealsdiv.style.border= "1px solid";
-						carDealsdiv.style.background ="#E6E6E6";
-						carDealsdiv.style.borderRadius = "20px";
-
-						var dealno = document.createElement("H2");
-						dealno.style.color = "#FF0000";
-						dealno.innerHTML = "#Deal No"+(i+1);
-						carDealsdiv.appendChild(dealno);
 
 						var dealcontent = document.createElement("DIV");
-						dealcontent.style.float = "left";
-						dealcontent.style.width = "50%";
-						var rentalcmpnyname = document.createElement("h1");
-						rentalcmpnyname.style.color = "#6699FF";
-						rentalcmpnyname.innerHTML="Rental Company Name :"+result.deals[i].rentalCompanyName;						
-						
-						var title = document.createElement("h4");
-						title.innerHTML="Title :"+result.deals[i].title;
-						dealcontent.appendChild(rentalcmpnyname);
-						dealcontent.appendChild(title);
+						dealcontent.className += " col description"; 
 
-						var dropLocation = document.createElement("p");
-						//dropLocation.style.font = "20px";
-						dropLocation.innerHTML = "DropLocation:<br>City :"+result.deals[i].dropOffLocation.city+"<br>State :"+ result.deals[i].dropOffLocation.state +"<br>Country :"+result.deals[i].dropOffLocation.country;
-						dealcontent.appendChild(dropLocation);
+						var rentalcmpnyname = document.createElement("h2");
+						var rentalcmpnynametext = document.createTextNode(result.deals[i].rentalCompanyName);					
+						rentalcmpnyname.appendChild(rentalcmpnynametext);
+						dealcontent.appendChild(rentalcmpnyname);
+
+						var bookingperiod = document.createElement("h5");
+						var bookingperiodText = document.createTextNode("Booking Period:");
+						bookingperiod.appendChild(bookingperiodText);
+						dealcontent.appendChild(bookingperiod);
+
+						var bookingperiodstartdate = document.createElement("span");
+						var bookingperiodstartdatetext = document.createTextNode("Date : "+ result.deals[i].bookingPeriod.start.date);
+						//   Total Amount:" + obj.deals[i].fare.totalAmount
+						bookingperiodstartdate.appendChild(bookingperiodstartdatetext);
+						dealcontent.appendChild(bookingperiodstartdate);
+
+						var totalamount = document.createElement("p");
+						var totalamounttext = document.createTextNode("Amount :" +result.deals[i].fare.totalAmount); 
+						totalamount.appendChild(totalamounttext);
+
+						dealcontent.appendChild(totalamount);
 						carDealsdiv.appendChild(dealcontent);
 
-						var carimgdiv = document.createElement("DIV");
-					//hotelimgdiv.style.width = "50%";
-						carDealsdiv.appendChild(carimgdiv);
-						var carimg = document.createElement("IMG");
-						carimg.src = res.imageUrl;
-						carimg.style.width= "300px";
-						carimg.style.height = "200px";
-						carimg.style.padding = "10px";
-						carimg.style.border = "2 px grey";
-						carimgdiv.appendChild(carimg);
-						document.getElementById("container").appendChild(carDealsdiv);
+
+						var validitydiv = document.createElement("div");
+						validitydiv.className += " col description";
+
+						var validityheader = document.createElement("h2");
+						var validityheadertext = document.createTextNode("Validity Period :");
+						validityheader.appendChild(validityheadertext);
+						validitydiv.appendChild(validityheader);
+
+						var validityperiodcontent = document.createElement("p");
+						validityperiodcontenttext = document.createTextNode("Start Date :"+result.deals[i].validityPeriod.start.date);
+						validityperiodcontent.appendChild(validityperiodcontenttext);                                          
+						validitydiv.appendChild(validityperiodcontent);
+
+						var validityperiodcontent = document.createElement("p");
+						validityperiodcontenttext = document.createTextNode("End Date :"+result.deals[i].validityPeriod.end.date);
+						validityperiodcontent.appendChild(validityperiodcontenttext);                                          
+						validitydiv.appendChild(validityperiodcontent);
+
+						carDealsdiv.appendChild(validitydiv);
+						document.getElementById("containerdiv").appendChild(carDealsdiv);
 					}
 			break;
 
@@ -107,3 +116,5 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET",url,true);
 xmlhttp.send();
 }
+
+e.onchange = showFeed;

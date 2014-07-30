@@ -2,27 +2,41 @@
 <html>
 <head>
 
-<title> Show RSS Feed </title>
+<title>RSS Feed</title>
+	<link rel="stylesheet" type="text/css" href="rss.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+ 	
 
-<script src="rss.js"></script>
 </head>
-
+ 	
 <body>
-<form>
-	<select id="options" onchange="showFeed();">
-	<option value="default">Choose Deals Category</option>
-	<option value="http://dev-mystique.tavisca.com/api/deals/all?token=oueq112tiudcc30vxgjcmbia&$filter=Type eq 'hotel'">Hotels</option>
-	<option value="http://dev-mystique.tavisca.com/api/deals/all?token=oueq112tiudcc30vxgjcmbia&$filter=Type eq 'car'">Cars</option>
-	<!-- <option value="http://dev-mystique.tavisca.com/api/deals/all?token=oueq112tiudcc30vxgjcmbia&$filter=Type eq 'activity'">Activities</option> -->
-	</select><br>
+	<div class="container">
+			<div class="row rssHeader">
+				<h2 class="rssheadertext">Rss Feed Reader</h2>
+			</div>	
+				
 
-	<!-- <textarea id="blogContent" rows="10" cols="100"></textarea> -->
-</form>
-	
-	<div id = "container">
+			<div class="row rsstitlediv">
+				<div class="col titletext">
+					<h5 class="textheader">Welcome to Rss  Reader</h5>
+				</div>
+				<div class="col inputdiv">
+					<form>
+						<select id="options">
+							<option value="default">Choose Deals Category</option>
+							<option value="http://dev-mystique.tavisca.com/api/deals/all?token=21p5z1enqr2swranvuuggwbg&$filter=Type eq 'hotel'">Hotels</option>
+							<option value="http://dev-mystique.tavisca.com/api/deals/all?token=21p5z1enqr2swranvuuggwbg&$filter=Type eq 'car'">Cars</option>
+						</select><br>
+					</form>
+				</div>
+			</div>	
+	</div>
+		
+	<div id = "containerdiv" class = "container">
+
 	</div>
 
-
+	<script type="text/javascript" src="rss.js"></script>
 
 
 </body>
